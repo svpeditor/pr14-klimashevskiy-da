@@ -1,8 +1,10 @@
 package ru.edu.pr11;
 
 public class BonusCalculator {
-    // граница повышенной ставки, само значение тоже относится к повышенной ставке
-    public static final double KPI_BOUNDARY = 80;
+    // вариант 4: граница KPI 80 + 25 % = 100, само значение относится к повышенной ставке
+    public static final double BASE_KPI_BOUNDARY = 80;
+    public static final double KPI_MODIFIER_PERCENT = 25;
+    public static final double KPI_BOUNDARY = BASE_KPI_BOUNDARY * (100 + KPI_MODIFIER_PERCENT) / 100;
 
     public double calculate(EmployeePerformance p) {
         validate(p);

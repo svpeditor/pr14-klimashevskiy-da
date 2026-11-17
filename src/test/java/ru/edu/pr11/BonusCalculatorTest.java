@@ -42,20 +42,28 @@ class BonusCalculatorTest {
         assertThrows(IllegalArgumentException.class, () -> calculator.calculate(p));
     }
 
-    // граница: 79.99 - обычная ставка 5 %
+    // вариант 4, граница: 99.99 - обычная ставка 5 %
     @Test
     void kpiJustBelowBoundaryGivesBaseRate() {
-        EmployeePerformance p = new EmployeePerformance(100000, 79.99, 4, 2);
+        EmployeePerformance p = new EmployeePerformance(100000, 99.99, 4, 2);
         double bonus = calculator.calculate(p);
         assertEquals(5000, bonus, DELTA);
     }
 
-    // дефект 5, граница: 80.00 уже повышенная ставка 15 % (было > 80)
+    // вариант 4, граница: 100.00 уже повышенная ставка 15 % (сравнение >=)
     @Test
-    void boundaryAtEightyPercent() {
-        EmployeePerformance p = new EmployeePerformance(100000, 80.00, 4, 2);
+    void boundaryAtHundredPercent() {
+        EmployeePerformance p = new EmployeePerformance(100000, 100.00, 4, 2);
         double bonus = calculator.calculate(p);
         assertEquals(15000, bonus, DELTA);
+    }
+
+    // по варианту 80.00 теперь обычная ставка
+    @Test
+    void eightyPercentIsBaseRateInVariant() {
+        EmployeePerformance p = new EmployeePerformance(100000, 80.00, 4, 2);
+        double bonus = calculator.calculate(p);
+        assertEquals(5000, bonus, DELTA);
     }
 
     @Test
@@ -98,9 +106,10 @@ class BonusCalculatorTest {
     // таблица случаев: kpi; rating; years; ожидаемая премия при окладе 100 000
     @ParameterizedTest
     @CsvSource({
-            "79.99, 4, 2, 5000",
-            "80.00, 4, 2, 15000",
-            "95.5, 5, 2, 20000",
+            "99.99, 4, 2, 5000",
+            "100.00, 4, 2, 15000",
+            "80.00, 4, 2, 5000",
+            "95.5, 5, 2, 10000",
             "60, 3, 10, 7000",
             "120, 5, 8, 22000"
     })
