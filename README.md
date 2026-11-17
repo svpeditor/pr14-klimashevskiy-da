@@ -22,7 +22,7 @@ java -cp out ru.edu.pr11.SelfCheck data/boundaries.csv
 `run_selfcheck.bat` - то же для Windows.
 
 Сначала выполняются проверки, потом обрабатывается `data/sample.csv` (формат `salary;kpi;rating;years`, первая строка - заголовок).
-Свой файл: `java -cp out ru.edu.pr11.SelfCheck data/boundaries.csv`. 
+Свой файл: `java -cp out ru.edu.pr11.SelfCheck data/boundaries.csv`.
 
 Пакет называется `ru.edu.pr11`, как в исходном проекте.
 
